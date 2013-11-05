@@ -6,9 +6,9 @@ Because sometimes, I have bad ideas!
 ```javascript
 var greet = overload(
   // no arguments passed
-  [function() {
+  function() {
     console.log('Hey, dude!');
-  }],
+  },
   
   // lonely string passed
   ['string', function(name) {
