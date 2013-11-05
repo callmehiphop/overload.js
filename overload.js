@@ -9,27 +9,14 @@
 }(this, function() {
 
   'use strict';
-  
+
   
   var slice = Array.prototype.slice;
   var toString = Object.prototype.toString;
   
-  
-  var types = {
-    'undefined': 'undefined',
-    'number': 'number',
-    'boolean': 'boolean',
-    'string': 'string',
-    '[object Function]': 'function',
-    '[object RegExp]': 'regexp',
-    '[object Array]': 'array',
-    '[object Date]': 'date',
-    '[object Error]': 'error'
-  };
-  
-  
-  function getType(thing) {
-    return types[typeof thing] || types[toString.call(thing)] || (thing ? 'object' : null);
+
+  function isArray(thing) {
+    return toString.call(thing) === '[object Array]';
   }
   
   function each(things, callback, context) {
@@ -52,15 +39,15 @@
     return results;
   }
   
-  function equals(a, b) {
-    if (a.length !== b.length) {
+  function checkTypes(things, requiredTypes) {
+    if (things.length !== requiredTypes.length) {
       return false;
     }
     
     var isEqual = true;
     
-    each(a, function(thing, i) {
-      if (b[i] !== thing) {
+    each(things, function(thing, i) {
+      if (thing.constructor !== requiredTypes[i]) {
         isEqual = false;
         return false;
       }
@@ -69,25 +56,22 @@
     return isEqual;
   }
   
-  
+
   function overload() {
     var functions = slice.call(arguments);
     
     return function() {
       var args = slice.call(arguments);
-      var suppliedTypes = map(args, function(arg) {
-        return getType(arg);
-      });
       
       each(functions, function(func) {
         var funcArgTypes = [];
 
-        if (getType(func) === 'array') {
+        if (isArray(func)) {
           funcArgTypes = func.slice(0, func.length - 1);
           func = func[func.length - 1];
         }
         
-        if (equals(suppliedTypes, funcArgTypes)) {
+        if (checkTypes(args, funcArgTypes)) {
           func.apply(this, args);
           return false;
         }
@@ -95,7 +79,7 @@
     };
   };
   
-  
+
   return overload;
-  
+
 }));
