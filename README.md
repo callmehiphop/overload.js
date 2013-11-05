@@ -60,4 +60,5 @@ var greet = overload(
 
 var stephen = new Person('Stephen');
 greet('Howdy', stephen);
+// Howdy, Stephen!
 ```
