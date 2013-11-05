@@ -69,7 +69,8 @@
     return isEqual;
   }
   
-  return function() {
+  
+  function overload() {
     var functions = slice.call(arguments);
     
     return function() {
@@ -79,8 +80,12 @@
       });
       
       each(functions, function(func) {
-        var funcArgTypes = func.slice(0, func.length - 1);
-        func = func[func.length - 1];
+        var funcArgTypes = [];
+
+        if (getType(func) === 'array') {
+          funcArgTypes = func.slice(0, func.length - 1);
+          func = func[func.length - 1];
+        }
         
         if (equals(suppliedTypes, funcArgTypes)) {
           func.apply(this, args);
@@ -89,5 +94,8 @@
       }, this);
     };
   };
+  
+  
+  return overload;
   
 }));
