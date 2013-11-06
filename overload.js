@@ -29,16 +29,6 @@
     }
   }
   
-  function map(things, callback) {
-    var results = [];
-    
-    each(things, function(thing) {
-      results.push(callback(thing));
-    });
-    
-    return results;
-  }
-  
   function checkTypes(things, requiredTypes) {
     if (things.length !== requiredTypes.length) {
       return false;
@@ -77,7 +67,7 @@
         }
       }, this);
     };
-  };
+  }
   
 
   return overload;
