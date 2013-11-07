@@ -7,22 +7,22 @@ Because sometimes, I have bad ideas!
 var greet = overload(
   // no arguments passed
   function() {
-    console.log('Hey, dude!');
+    return 'Hey, dude!';
   },
   
   // lonely string passed
   [String, function(name) {
-    console.log('Hey,', name + '!'); 
+    return 'Hey, ' + name + '!';
   }],
   
   // a couple of strings passed
   [String, String, function(greeting, name) {
-    console.log(greeting + ',', name + '!'); 
+    return greeting + ', ' + name + '!';
   }],
   
   // a number is passed
   [Number, function(name) {
-    console.log('0111010101010101 10 1010101'); 
+    return '0111010101010101 10 1010101';
   }]
 );
 
@@ -49,11 +49,11 @@ function Person(name) {
 
 var greet = overload(
   [Person, function(person) {
-    console.log('Hello,', person.name + '!');
+    return 'Hello, ' + person.name + '!';
   }],
   
   [String, Person, function(greeting, person) {
-    console.log(greeting + ',', person.name + '!');
+    return greeting + ', ' + person.name + '!';
   }]
 );
 
