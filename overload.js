@@ -52,6 +52,7 @@
     
     return function() {
       var args = slice.call(arguments);
+      var match;
       
       each(functions, function(func) {
         var funcArgTypes = [];
@@ -62,10 +63,12 @@
         }
         
         if (checkTypes(args, funcArgTypes)) {
-          func.apply(this, args);
+          match = func;
           return false;
         }
-      }, this);
+      });
+
+      return match ? match.apply(this, args) : false;
     };
   }
   
